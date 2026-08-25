@@ -2,3 +2,6 @@ fastapi
 uvicorn
 psycopg2-binary
 sqlalchemy
+pytest
+pytest-mock
+httpx
