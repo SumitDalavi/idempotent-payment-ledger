@@ -41,9 +41,11 @@ class AccountRequest(BaseModel):
 
 @app.post("/api/v1/accounts", status_code=201)
 def create_account(req: AccountRequest, db: Session = Depends(get_db)):
+    import uuid
+    new_id = str(uuid.uuid4())
     row = db.execute(
-        text("INSERT INTO accounts (name, currency) VALUES (:n, :c) RETURNING id, name, currency, created_at"),
-        {"n": req.name, "c": req.currency},
+        text("INSERT INTO accounts (id, name, currency) VALUES (:id, :n, :c) RETURNING id, name, currency, created_at"),
+        {"id": new_id, "n": req.name, "c": req.currency},
     ).fetchone()
     db.execute(text("INSERT INTO account_balances (account_id) VALUES (:id)"), {"id": str(row.id)})
     db.commit()

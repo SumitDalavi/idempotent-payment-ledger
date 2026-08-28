@@ -50,8 +50,10 @@ def transfer(
     # Lock both accounts in consistent order (lower ID first) to prevent deadlocks
     ids = sorted([from_account_id, to_account_id])
     for aid in ids:
+        # SQLite doesn't support SELECT ... FOR UPDATE
+        for_update = " FOR UPDATE" if db.bind.dialect.name != "sqlite" else ""
         row = db.execute(
-            text("SELECT balance FROM account_balances WHERE account_id = :id FOR UPDATE"),
+            text(f"SELECT balance FROM account_balances WHERE account_id = :id{for_update}"),
             {"id": aid},
         ).fetchone()
         if row is None:
@@ -84,14 +86,14 @@ def transfer(
     # Update materialized balances
     db.execute(
         text("""
-            UPDATE account_balances SET balance = balance - :amount, updated_at = NOW(), version = version + 1
+            UPDATE account_balances SET balance = balance - :amount, updated_at = CURRENT_TIMESTAMP, version = version + 1
             WHERE account_id = :id
         """),
         {"amount": amount, "id": from_account_id},
     )
     db.execute(
         text("""
-            UPDATE account_balances SET balance = balance + :amount, updated_at = NOW(), version = version + 1
+            UPDATE account_balances SET balance = balance + :amount, updated_at = CURRENT_TIMESTAMP, version = version + 1
             WHERE account_id = :id
         """),
         {"amount": amount, "id": to_account_id},
