@@ -1,4 +1,5 @@
 # idempotent-payment-ledger Architecture
+> Maturity: Full Prototype
 
 ## System Diagram
 The following Mermaid.js sequence diagram maps the core workflow and interactions:
