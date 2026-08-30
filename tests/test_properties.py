@@ -1,6 +1,8 @@
 import pytest
 from hypothesis import given, strategies as st
 import random
+import sys, os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from api.app import app
 from db.database import init_db, get_db
 
