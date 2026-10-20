@@ -1,14 +1,15 @@
 > **NOTE:** This repository is an archival lab or partial prototype. It is not actively maintained and should not be used as a reference for production-grade deployments or performance benchmarks.
 
-
 # Idempotent Payment Ledger 💳
 
-[![Release](https://img.shields.io/github/v/release/SumitDalavi/idempotent-payment-ledger?color=blue&logo=github)](https://github.com/SumitDalavi/idempotent-payment-ledger/releases)
+[![CI Pipeline](https://github.com/SumitDalavi/idempotent-payment-ledger/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/SumitDalavi/idempotent-payment-ledger/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/SumitDalavi/idempotent-payment-ledger?color=0969da&label=release&logo=github)](https://github.com/SumitDalavi/idempotent-payment-ledger/releases)
 [![Release Workflow](https://github.com/SumitDalavi/idempotent-payment-ledger/actions/workflows/release.yml/badge.svg)](https://github.com/SumitDalavi/idempotent-payment-ledger/actions/workflows/release.yml)
-[![SBOM](https://img.shields.io/badge/SBOM-SPDX%20JSON-blueviolet?logo=spdx)](https://github.com/SumitDalavi/idempotent-payment-ledger/releases)
-
-[![Release](https://img.shields.io/github/v/release/SumitDalavi/idempotent-payment-ledger?color=blue&logo=github)](https://github.com/SumitDalavi/idempotent-payment-ledger/releases)
-[![SBOM](https://img.shields.io/badge/SBOM-SPDX%20JSON-blueviolet?logo=spdx)](https://github.com/SumitDalavi/idempotent-payment-ledger/releases)
+[![GHCR Container](https://img.shields.io/badge/ghcr.io-v0.2.0-blue?logo=docker&logoColor=white)](https://github.com/SumitDalavi/idempotent-payment-ledger/pkgs/container/idempotent-payment-ledger)
+[![Node.js](https://img.shields.io/badge/Node.js-20+-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](https://www.python.org)
+[![SBOM](https://img.shields.io/badge/SBOM-SPDX%202.3-blueviolet?logo=spdx)](https://github.com/SumitDalavi/idempotent-payment-ledger/releases/tag/v0.2.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 > Financial ledger API enforcing strict idempotency and ACID transactions for payment processing.
 
