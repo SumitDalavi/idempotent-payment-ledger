@@ -1,19 +1,37 @@
 version: '3.8'
+
 services:
   api:
     build: .
     ports:
-      - "8000:8000"
+      - "3000:3000"
+    env_file:
+      - path: .env
+        required: false
     environment:
-      - DATABASE_URL=postgresql://user:pass@db:5432/ledger
-    depends_on:
-      - db
-  
+      - PORT=3000
+
+  # ── Tier 2 Companion Services (started via: docker compose --profile live up) ──
   db:
     image: postgres:15-alpine
+    profiles: ["live"]
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=pass
       - POSTGRES_DB=ledger
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    profiles: ["live"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+
+volumes:
+  pgdata:
+  redisdata:
