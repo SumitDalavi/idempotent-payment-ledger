@@ -122,6 +122,38 @@ Enterprise deployment with production-grade backends, security scans, and contai
 - [Decisions](docs/decisions.md)
 - [Changelog](docs/changelog.md)
 
+
+## 🚀 Declarative Continuous GitOps Deployment
+
+This system is continuously deployed across multi-cluster environments via **ArgoCD v2.10+** and **Kustomize** overlays managed by the [`multi-cluster-gitops-promotion`](https://github.com/SumitDalavi/multi-cluster-gitops-promotion) catalog hub:
+
+```
+deploy/
+├── k8s/
+│   ├── base/                  # Baseline Deployment, Service, ServiceAccount (PodSecurity restricted)
+│   └── overlays/
+│       ├── dev/               # 1 replica, 300m/256Mi, automated self-healing
+│       ├── staging/           # 2 replicas, 500m/512Mi, automated self-healing
+│       └── prod/              # 3 replicas, 1000m/1Gi, gated PR promotion
+└── argocd/
+    ├── application.yaml       # Default staging Application CRD
+    ├── application-dev.yaml   # In-cluster dev Application CRD
+    ├── application-prod.yaml  # Production gated Application CRD
+    └── values-override.yaml   # Helm/Kustomize values overrides
+```
+
+### Local Manifest Dry-Run Validation
+```bash
+# Validate Dev Overlay
+kubectl kustomize deploy/k8s/overlays/dev
+
+# Validate Staging Overlay
+kubectl kustomize deploy/k8s/overlays/staging
+
+# Validate Production Overlay
+kubectl kustomize deploy/k8s/overlays/prod
+```
+
 ## 👨‍💻 Author
 
 **Sumit Dalavi** — Senior DevSecOps / Platform Engineer
