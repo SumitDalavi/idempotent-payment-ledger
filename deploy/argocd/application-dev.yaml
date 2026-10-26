@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: idempotent-payment-ledger-dev
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: distributed-systems
+    environment: dev
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/SumitDalavi/idempotent-payment-ledger.git
+    targetRevision: master
+    path: deploy/k8s/overlays/dev
+    kustomize:
+      images:
+        - name: ghcr.io/sumitdalavi/idempotent-payment-ledger
+          newTag: v0.2.0
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: payment-ledger
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
